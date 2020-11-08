@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import monitoreo.modelos.impl.ImagenIcono;
+import monitoreo.modelos.impl.NullIcono;
 
 public class Ventana extends Application {
 
@@ -33,7 +35,11 @@ public class Ventana extends Application {
         mapaBase.imprimeCoordenadasActual();
         stackPane.getChildren().add(mapaBase.getMapView());
 
+        Icono imagen = new ImagenIcono("https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/4498062351543238871-512.png");
+        Icono imagen2 = new NullIcono();
+
         Button btnNuevo = new Button();
+        btnNuevo.setGraphic(imagen.getImageView());
         btnNuevo.setText("Nuevo");
         btnNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -53,6 +59,9 @@ public class Ventana extends Application {
         StackPane stackPane = new StackPane();
         Scene scene = new Scene(stackPane);
         stage.setScene(scene);
+        stage.setTitle("Sistema de Monitoreo de Vehiculos");
+        stage.setWidth(800);
+        stage.setHeight(700);
 
         //  Clonacion de MapaBase
         Mapa mapaBase2 = (Mapa)mapaBase.copiar();
