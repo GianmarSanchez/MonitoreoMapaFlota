@@ -11,7 +11,7 @@ public class RegistroLog {
         }
         return registro;
     }
-
+    
     public void log (String mensaje)    {
 
         System.out.println( mensaje );

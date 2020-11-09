@@ -41,8 +41,8 @@ public class Mapa implements IMapa {
 
         // latitude, longitude, scale
         //Viewpoint viewpoint = new Viewpoint(27.3805833, 33.6321389, 6E3);
-        this.coordenadaXInicial = -12.0560;
-        this.coordenadaYInicial = -77.0844;
+        this.coordenadaXInicial = -12.05462;
+        this.coordenadaYInicial = -77.08396;
         Viewpoint viewpoint = new Viewpoint(this.coordenadaXInicial, this.coordenadaYInicial, 12000);   // UNMSM
 
         // take 5 seconds to move to viewpoint
