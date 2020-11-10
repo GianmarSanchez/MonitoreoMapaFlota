@@ -20,6 +20,7 @@ import monitoreo.modelos.interfaces.IMapa;
 public class Mapa implements IMapa {
 
     private MapView mapView;
+    private int idVentana;
 
     private double coordenadaXInicial;
     private double coordenadaYInicial;
@@ -32,6 +33,7 @@ public class Mapa implements IMapa {
 
         // create a MapView to display the map and add it to the stack pane
         mapView = new MapView();
+        idVentana++;
 
         // create an ArcGISMap with the default imagery basemap
         final ArcGISMap map = new ArcGISMap(Basemap.createImagery());
@@ -51,10 +53,10 @@ public class Mapa implements IMapa {
             try {
                 boolean completed = viewpointSetFuture.get();
                 if (completed) {
-                    registro.log("Acercamiento completado");
+                    registro.log("IdVentana:["+ idVentana +"] - Acercamiento completado");
                 }
             } catch (InterruptedException e) {
-                registro.log("Acercamiento interrumpido");
+                registro.log("IdVentana:["+ idVentana +"] - Acercamiento interrumpido");
             } catch (ExecutionException e) {
                 // Deal with exception during animation...
             }
@@ -80,7 +82,7 @@ public class Mapa implements IMapa {
 
         this.coordenadaXActual = location.getX();
         this.coordenadaYActual = location.getY();
-        registro.log("Coordenadas: " + this.coordenadaXActual + ", " + this.coordenadaYActual);
+        registro.log("IdVentana:["+ idVentana +"] - Coordenadas: " + this.coordenadaXActual + ", " + this.coordenadaYActual);
 
         String latLonDecimalDegrees = CoordinateFormatter.toLatitudeLongitude(location, CoordinateFormatter
                 .LatitudeLongitudeFormat.DECIMAL_DEGREES, 4);
@@ -111,13 +113,15 @@ public class Mapa implements IMapa {
     public void imprimeCoordenadasActual()  {
 
         //System.out.println("Coordenadas actual: [" + this.coordenadaXActual + ", " + this.coordenadaYActual + "]");
-        registro.log("Coordenadas actual: [" + this.coordenadaXActual + ", " + this.coordenadaYActual + "]");
+        registro.log("IdVentana:["+ idVentana +"] - Coordenadas actual: [" + this.coordenadaXActual + ", " + this.coordenadaYActual + "]");
     }
 
     @Override
     public IMapa copiar() {
         //return new Mapa(this);
         Mapa m = new Mapa();
+        this.idVentana++;
+        m.idVentana = this.idVentana;
         m.coordenadaXInicial = this.coordenadaXInicial;
         m.coordenadaYInicial = this.coordenadaYInicial;
         m.coordenadaXActual = this.coordenadaXActual;

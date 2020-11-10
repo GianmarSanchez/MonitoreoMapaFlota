@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.ImagenIcono;
-import monitoreo.modelos.impl.NullIcono;
+import monitoreo.modelos.impl.IconoNulo;
 
 public class Ventana extends Application {
 
@@ -36,10 +36,9 @@ public class Ventana extends Application {
         stackPane.getChildren().add(mapaBase.getMapView());
 
         Icono imagen = new ImagenIcono("https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/4498062351543238871-512.png");
-        Icono imagen2 = new NullIcono();
 
         Button btnNuevo = new Button();
-        btnNuevo.setGraphic(imagen.getImageView());
+        btnNuevo.setGraphic( (imagen.getImageView()!=null)?imagen.getImageView(): new IconoNulo().getImageView() );
         btnNuevo.setText("Nuevo");
         btnNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
