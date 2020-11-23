@@ -13,8 +13,8 @@ public class ImagenIcono extends Icono {
         view.setFitHeight(40);
         view.setPreserveRatio(true);
 
-        this.imageView = view;
-        //this.imageView = null;
+        //this.imageView = view;
+        this.imageView = null;
     }
 
     @Override

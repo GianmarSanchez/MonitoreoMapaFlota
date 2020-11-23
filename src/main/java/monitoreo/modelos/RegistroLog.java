@@ -13,6 +13,10 @@ public class RegistroLog {
         }
         return registro;
     }
+
+    private RegistroLog()   {
+        System.out.println("Inicializando el log...");
+    }
     
     public void log (String mensaje)    {
 
