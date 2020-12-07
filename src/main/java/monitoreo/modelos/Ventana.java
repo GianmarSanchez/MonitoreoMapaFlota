@@ -1,5 +1,6 @@
 package monitoreo.modelos;
 
+import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,10 +12,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.ImagenIcono;
 import monitoreo.modelos.impl.IconoNulo;
+import monitoreo.modelos.impl.Poligono;
+import monitoreo.modelos.impl.Punto;
 
 public class Ventana extends Application {
 
     private Mapa mapaBase;
+    private GraphicsOverlay graphicsOverlay;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -33,7 +37,7 @@ public class Ventana extends Application {
         // create a MapView to display the map and add it to the stack pane
         mapaBase = new Mapa();
         mapaBase.imprimeCoordenadasActual();
-        stackPane.getChildren().add(mapaBase.getMapView());
+        //stackPane.getChildren().add(mapaBase.getMapView());
 
         Icono imagen = new ImagenIcono("https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/4498062351543238871-512.png");
 
@@ -51,6 +55,19 @@ public class Ventana extends Application {
         stackPane.getChildren().add(btnNuevo);
         stackPane.setAlignment(btnNuevo, Pos.BOTTOM_CENTER);
         stackPane.setMargin(btnNuevo, new Insets(10, 10, 10, 10));
+
+
+        // Agregar graficos
+        graphicsOverlay = new GraphicsOverlay();
+        Punto punto = new Punto(-12.0547, -77.084);
+        //graphicsOverlay.getGraphics().add(punto.getPunto());
+        Poligono poli = new Poligono();
+        graphicsOverlay.getGraphics().add(poli.getPoligono());
+
+
+        mapaBase.getMapView().getGraphicsOverlays().add(graphicsOverlay);
+
+        stackPane.getChildren().add(mapaBase.getMapView());
     }
 
     public void muestraNuevaVentana() {
