@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.ImagenIcono;
 import monitoreo.modelos.impl.IconoNulo;
-import monitoreo.modelos.impl.Poligono;
+import monitoreo.modelos.impl.PoliLinea;
 import monitoreo.modelos.impl.Punto;
 
 public class Ventana extends Application {
@@ -57,17 +57,46 @@ public class Ventana extends Application {
         stackPane.setMargin(btnNuevo, new Insets(10, 10, 10, 10));
 
 
-        // Agregar graficos
+        // Crear Ruta
         graphicsOverlay = new GraphicsOverlay();
         Punto punto = new Punto(-12.0547, -77.084);
-        //graphicsOverlay.getGraphics().add(punto.getPunto());
-        Poligono poli = new Poligono();
+        graphicsOverlay.getGraphics().add(punto.getPunto());
+        Double[][] puntos = {
+                {-12.0547, -77.084},
+                {-12.051457, -77.085320},
+                {-12.053728, -77.084544},
+                {-12.056421, -77.080346}
+        };
+        PoliLinea poli = new PoliLinea(puntos);
         graphicsOverlay.getGraphics().add(poli.getPoligono());
+
+        Punto punto2 = new Punto(-12.056421, -77.080346);
+        graphicsOverlay.getGraphics().add(punto2.getPunto());
+
+        Double[][] puntos2 = {
+                {-12.056421, -77.080346},
+                {-12.059836, -77.079162},
+                {-12.068173, -77.077901},
+                {-12.072885, -77.078516}
+        };
+        PoliLinea poli2 = new PoliLinea(puntos2);
+        graphicsOverlay.getGraphics().add(poli2.getPoligono());
+
+        Punto punto3 = new Punto(-12.072885, -77.078516);
+        graphicsOverlay.getGraphics().add(punto3.getPunto());
 
 
         mapaBase.getMapView().getGraphicsOverlays().add(graphicsOverlay);
 
         stackPane.getChildren().add(mapaBase.getMapView());
+
+        // Tipo servicio - ejecutar servicio
+
+        // crear ruta recojo
+        // crear ruta entrega
+        // crear punto recojo
+        // crear punto entrega
+
     }
 
     public void muestraNuevaVentana() {

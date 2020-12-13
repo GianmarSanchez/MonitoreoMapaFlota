@@ -2,17 +2,18 @@ package monitoreo.modelos.impl;
 
 import com.esri.arcgisruntime.geometry.*;
 import com.esri.arcgisruntime.mapping.view.Graphic;
-import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import monitoreo.modelos.interfaces.IGrafico;
 
-public class Poligono implements IGrafico {
+import java.util.List;
+
+public class PoliLinea implements IGrafico {
 
     private Graphic poligono;
 
     private static final SpatialReference SPATIAL_REFERENCE = SpatialReferences.getWgs84();
 
-    public Poligono() {
+    public PoliLinea(Double[][] puntos) {
         // create a green (0xFF005000) simple line symbol
         SimpleLineSymbol outlineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, 0xFF005000, 3.0f);
         
@@ -20,10 +21,9 @@ public class Poligono implements IGrafico {
         PointCollection points = new PointCollection(SPATIAL_REFERENCE);
 
         // create and add points to the point collection
-        points.add(new Point(-77.08396, -12.05462));
-        points.add(new Point(-77.089, -12.059));
-        points.add(new Point(-77.084, -12.059));
-        points.add(new Point(-77.08396, -12.05462));
+        for(Double[] punto: puntos){
+            points.add(new Point(punto[1], punto[0]));
+        }
 
         // create the polyline from the point collection
         Polyline polygon = new Polyline(points);
