@@ -15,7 +15,7 @@ public class PoliLinea implements IGrafico {
 
     public PoliLinea(Double[][] puntos) {
         // create a green (0xFF005000) simple line symbol
-        SimpleLineSymbol outlineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, 0xFF005000, 3.0f);
+        SimpleLineSymbol outlineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, 0xffffff00, 3.0f);
         
         // create a new point collection for polygon
         PointCollection points = new PointCollection(SPATIAL_REFERENCE);
@@ -44,7 +44,13 @@ public class PoliLinea implements IGrafico {
     }
 
     @Override
-    public void dibujar() {
+    public Double getPrecio() {
+        System.out.println("[PoliLinea] Precio del punto 1 $");
+        return 1.0;
+    }
 
+    @Override
+    public void ejecutarServicio() {
+        System.out.println("[Punto] Ejecutando punto");
     }
 }

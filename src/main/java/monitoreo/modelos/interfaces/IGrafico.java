@@ -4,5 +4,7 @@ public interface IGrafico {
 
     void mover(Integer x, Integer Y);
 
-    void dibujar();
+    Double getPrecio();
+
+    void ejecutarServicio();
 }

@@ -10,10 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import monitoreo.modelos.impl.ImagenIcono;
-import monitoreo.modelos.impl.IconoNulo;
-import monitoreo.modelos.impl.PoliLinea;
-import monitoreo.modelos.impl.Punto;
+import monitoreo.modelos.impl.*;
+import monitoreo.modelos.interfaces.IGrafico;
 
 public class Ventana extends Application {
 
@@ -57,45 +55,47 @@ public class Ventana extends Application {
         stackPane.setMargin(btnNuevo, new Insets(10, 10, 10, 10));
 
 
-        // Crear Ruta
+        // Entregas programadas para una misma ruta
+        Double costoTotal = 0.0;
+        EntregaProgramada entrega1 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        costoTotal += entrega1.calcularCosto();
+
+        EntregaProgramada entrega2 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        costoTotal += entrega2.calcularCosto();
+
+        EntregaProgramada entrega3 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        costoTotal += entrega3.calcularCosto();
+
+        System.out.println("[Cliente] Costo total "+costoTotal);
+
+
+        // Crear ruta con entrega y recojo
+        // Alertas y notificaciones
         graphicsOverlay = new GraphicsOverlay();
-        Punto punto = new Punto(-12.0547, -77.084);
-        graphicsOverlay.getGraphics().add(punto.getPunto());
-        Double[][] puntos = {
-                {-12.0547, -77.084},
-                {-12.051457, -77.085320},
-                {-12.053728, -77.084544},
-                {-12.056421, -77.080346}
+        Punto puntoRecojo = new PuntoRecojo(-12.054901, -77.085470);
+        puntoRecojo.ejecutarServicio();
+        graphicsOverlay.getGraphics().add(puntoRecojo.getPunto());
+        Double[][] puntosEntrega = {
+                {-12.054901, -77.085470},
+                {-12.051833, -77.087903},
+                {-12.061104, -77.084243},
+                {-12.060876, -77.082660},
+                {-12.067592, -77.081687},
+                {-12.072936, -77.083132}
         };
-        PoliLinea poli = new PoliLinea(puntos);
-        graphicsOverlay.getGraphics().add(poli.getPoligono());
+        PoliLinea poliEntrega = new PoliLineaEntrega(puntosEntrega);
+        graphicsOverlay.getGraphics().add(poliEntrega.getPoligono());
+        poliEntrega.ejecutarServicio();
 
-        Punto punto2 = new Punto(-12.056421, -77.080346);
-        graphicsOverlay.getGraphics().add(punto2.getPunto());
-
-        Double[][] puntos2 = {
-                {-12.056421, -77.080346},
-                {-12.059836, -77.079162},
-                {-12.068173, -77.077901},
-                {-12.072885, -77.078516}
-        };
-        PoliLinea poli2 = new PoliLinea(puntos2);
-        graphicsOverlay.getGraphics().add(poli2.getPoligono());
-
-        Punto punto3 = new Punto(-12.072885, -77.078516);
-        graphicsOverlay.getGraphics().add(punto3.getPunto());
-
+        Punto puntoEntrega = new Punto(-12.072936, -77.083132);
+        graphicsOverlay.getGraphics().add(puntoEntrega.getPunto());
+        puntoEntrega.ejecutarServicio();
 
         mapaBase.getMapView().getGraphicsOverlays().add(graphicsOverlay);
 
         stackPane.getChildren().add(mapaBase.getMapView());
 
-        // Tipo servicio - ejecutar servicio
-
-        // crear ruta recojo
-        // crear ruta entrega
-        // crear punto recojo
-        // crear punto entrega
+        // especifar la parte a mejorar
 
     }
 

@@ -21,6 +21,7 @@ public class Punto implements IGrafico {
     }
 
     public Graphic getPunto() {
+        // alertas
         return punto;
     }
 
@@ -30,7 +31,13 @@ public class Punto implements IGrafico {
     }
 
     @Override
-    public void dibujar() {
+    public Double getPrecio() {
+        System.out.println("[Punto] Precio del punto 1 $");
+        return 1.0;
+    }
 
+    @Override
+    public void ejecutarServicio() {
+        System.out.println("[Punto] Ejecutando punto");
     }
 }
