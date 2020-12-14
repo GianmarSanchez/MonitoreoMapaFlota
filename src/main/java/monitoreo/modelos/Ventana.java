@@ -95,8 +95,6 @@ public class Ventana extends Application {
 
         stackPane.getChildren().add(mapaBase.getMapView());
 
-        // especifar la parte a mejorar
-
     }
 
     public void muestraNuevaVentana() {

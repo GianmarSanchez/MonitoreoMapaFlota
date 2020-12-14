@@ -22,6 +22,7 @@ public class Punto implements IGrafico {
 
     public Graphic getPunto() {
         // alertas
+        System.out.println("[Punto] Obteniendo Punto para agregarlo al mapa");
         return punto;
     }
 

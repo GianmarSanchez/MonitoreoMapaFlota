@@ -35,6 +35,7 @@ public class PoliLinea implements IGrafico {
     }
 
     public Graphic getPoligono(){
+        System.out.println("[PoliLinea] Obtener poligono para agregarlo al mapa");
         return this.poligono;
     }
 
