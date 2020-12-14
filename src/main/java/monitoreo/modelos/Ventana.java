@@ -1,7 +1,5 @@
 package monitoreo.modelos;
 
-import com.esri.arcgisruntime.mapping.view.Graphic;
-import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,33 +10,20 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.*;
-import monitoreo.modelos.interfaces.IEntrega;
-import monitoreo.modelos.interfaces.IGrafico;
 import monitoreo.modelos.interfaces.ITipoServicio;
 
 public class Ventana extends Application {
 
     private Mapa mapaBase;
-    private GraphicsOverlay graphicsOverlay;
+    //private GraphicsOverlay graphicsOverlay;
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        // set the title and size of the stage and show it
-        stage.setTitle("Sistema de Monitoreo de Vehiculos");
-        stage.setWidth(800);
-        stage.setHeight(700);
-        stage.show();
+        FachadaMapa facade = new FachadaMapa(stage);
+        facade.mostrarMapa();
 
-        // create a JavaFX scene with a stack pane as the root node and add it to the scene
-        StackPane stackPane = new StackPane();
-        Scene scene = new Scene(stackPane);
-        stage.setScene(scene);
-
-        // create a MapView to display the map and add it to the stack pane
-        mapaBase = new Mapa();
-        mapaBase.imprimeCoordenadasActual();
-        //stackPane.getChildren().add(mapaBase.getMapView());
+        facade.getMapaBase().imprimeCoordenadasActual();
 
         Icono imagen = new ImagenIcono("https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/4498062351543238871-512.png");
 
@@ -53,9 +38,9 @@ public class Ventana extends Application {
         });
 
         // https://developers.arcgis.com/java/latest/java/sample-code/change-viewpoint/
-        stackPane.getChildren().add(btnNuevo);
-        stackPane.setAlignment(btnNuevo, Pos.BOTTOM_CENTER);
-        stackPane.setMargin(btnNuevo, new Insets(10, 10, 10, 10));
+        facade.getStackPane().getChildren().add(btnNuevo);
+        facade.getStackPane().setAlignment(btnNuevo, Pos.BOTTOM_CENTER);
+        facade.getStackPane().setMargin(btnNuevo, new Insets(10, 10, 10, 10));
 
 
 
@@ -81,10 +66,13 @@ public class Ventana extends Application {
         ITipoServicio recojo = new RecojoTipoServicio();
         ITipoServicio entrega = new EntregaTipoServicio();
 
-        graphicsOverlay = new GraphicsOverlay();
+        //graphicsOverlay = new GraphicsOverlay();
         Punto puntoRecojo = new Punto(recojo, -12.054901, -77.085470);
         puntoRecojo.ejecutarServicio();
-        graphicsOverlay.getGraphics().add(puntoRecojo.getPunto());
+        //graphicsOverlay.getGraphics().add(puntoRecojo.getPunto());
+        facade.addGraphicsOverlay(puntoRecojo.getGrafico());
+
+
         Double[][] puntosEntrega = {
                 {-12.054901, -77.085470},
                 {-12.051833, -77.087903},
@@ -94,16 +82,19 @@ public class Ventana extends Application {
                 {-12.072936, -77.083132}
         };
         PoliLinea poliEntrega = new PoliLinea(entrega, puntosEntrega);
-        graphicsOverlay.getGraphics().add(poliEntrega.getPoligono());
+        //graphicsOverlay.getGraphics().add(poliEntrega.getPoligono());
+        facade.addGraphicsOverlay(poliEntrega.getGrafico());
         poliEntrega.ejecutarServicio();
 
         Punto puntoEntrega = new Punto(entrega,-12.072936, -77.083132);
-        graphicsOverlay.getGraphics().add(puntoEntrega.getPunto());
+        //graphicsOverlay.getGraphics().add(puntoEntrega.getPunto());
+        facade.addGraphicsOverlay(puntoEntrega.getGrafico());
         puntoEntrega.ejecutarServicio();
 
-        mapaBase.getMapView().getGraphicsOverlays().add(graphicsOverlay);
-
-        stackPane.getChildren().add(mapaBase.getMapView());
+        //facade.getMapaBase().getMapView().getGraphicsOverlays().add(graphicsOverlay);
+        facade.addGraphicOverlay();
+        //facade.getStackPane().getChildren().add(mapaBase.getMapView());
+        facade.stackAddMapView();
 
     }
 
