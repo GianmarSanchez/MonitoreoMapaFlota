@@ -1,5 +1,6 @@
 package monitoreo.modelos;
 
+import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,7 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.*;
+import monitoreo.modelos.interfaces.IEntrega;
 import monitoreo.modelos.interfaces.IGrafico;
+import monitoreo.modelos.interfaces.ITipoServicio;
 
 public class Ventana extends Application {
 
@@ -55,24 +58,31 @@ public class Ventana extends Application {
         stackPane.setMargin(btnNuevo, new Insets(10, 10, 10, 10));
 
 
+
         // Entregas programadas para una misma ruta
-        Double costoTotal = 0.0;
-        EntregaProgramada entrega1 = new EntregaProgramada("09:00-10:00", "23/07/2020");
-        costoTotal += entrega1.calcularCosto();
+        // Double costoTotal = 0.0; No es necesario usar un acumulador
+        GuiaEntrega guia = new GuiaEntrega();
+        guia.agregarEntrega(new EntregaProgramada("09:00-10:00", "14/12/2020"));
+        guia.agregarEntrega(new EntregaProgramada("10:00-11:00", "14/12/2020"));
+        guia.agregarEntrega(new EntregaProgramada("12:00-13:00", "14/12/2020"));
+        guia.listarEntrega();
 
-        EntregaProgramada entrega2 = new EntregaProgramada("09:00-10:00", "23/07/2020");
-        costoTotal += entrega2.calcularCosto();
+        GuiaEntrega guiaGeneral = new GuiaEntrega();
+        guiaGeneral.agregarEntrega(new EntregaProgramada("13:00-14:00", "14/12/2020"));
+        guiaGeneral.agregarEntrega(guia);
 
-        EntregaProgramada entrega3 = new EntregaProgramada("09:00-10:00", "23/07/2020");
-        costoTotal += entrega3.calcularCosto();
+        System.out.println("[Cliente][Guia General] Costo total "+guiaGeneral.calcularCosto());
 
-        System.out.println("[Cliente] Costo total "+costoTotal);
 
 
         // Crear ruta con entrega y recojo
         // Alertas y notificaciones
+        // Eliminar clases que repiten comportamiento
+        ITipoServicio recojo = new RecojoTipoServicio();
+        ITipoServicio entrega = new EntregaTipoServicio();
+
         graphicsOverlay = new GraphicsOverlay();
-        Punto puntoRecojo = new PuntoRecojo(-12.054901, -77.085470);
+        Punto puntoRecojo = new Punto(recojo, -12.054901, -77.085470);
         puntoRecojo.ejecutarServicio();
         graphicsOverlay.getGraphics().add(puntoRecojo.getPunto());
         Double[][] puntosEntrega = {
@@ -83,11 +93,11 @@ public class Ventana extends Application {
                 {-12.067592, -77.081687},
                 {-12.072936, -77.083132}
         };
-        PoliLinea poliEntrega = new PoliLineaEntrega(puntosEntrega);
+        PoliLinea poliEntrega = new PoliLinea(entrega, puntosEntrega);
         graphicsOverlay.getGraphics().add(poliEntrega.getPoligono());
         poliEntrega.ejecutarServicio();
 
-        Punto puntoEntrega = new Punto(-12.072936, -77.083132);
+        Punto puntoEntrega = new Punto(entrega,-12.072936, -77.083132);
         graphicsOverlay.getGraphics().add(puntoEntrega.getPunto());
         puntoEntrega.ejecutarServicio();
 

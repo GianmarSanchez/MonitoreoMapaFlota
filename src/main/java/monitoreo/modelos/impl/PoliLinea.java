@@ -4,16 +4,22 @@ import com.esri.arcgisruntime.geometry.*;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import monitoreo.modelos.interfaces.IGrafico;
+import monitoreo.modelos.interfaces.ITipoServicio;
 
 import java.util.List;
 
 public class PoliLinea implements IGrafico {
 
+    private ITipoServicio tipoServicio;
+
     private Graphic poligono;
 
     private static final SpatialReference SPATIAL_REFERENCE = SpatialReferences.getWgs84();
 
-    public PoliLinea(Double[][] puntos) {
+    public PoliLinea(ITipoServicio tipoServicio, Double[][] puntos) {
+
+        this.tipoServicio = tipoServicio;
+
         // create a green (0xFF005000) simple line symbol
         SimpleLineSymbol outlineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, 0xffffff00, 3.0f);
         
@@ -34,6 +40,10 @@ public class PoliLinea implements IGrafico {
 
     }
 
+    public Graphic getGrafico(){
+        return getPoligono();
+    }
+
     public Graphic getPoligono(){
         System.out.println("[PoliLinea] Obtener poligono para agregarlo al mapa");
         return this.poligono;
@@ -52,6 +62,7 @@ public class PoliLinea implements IGrafico {
 
     @Override
     public void ejecutarServicio() {
-        System.out.println("[Punto] Ejecutando punto");
+        //System.out.println("[Punto] Ejecutando punto");
+        tipoServicio.ejecutarServicio();
     }
 }

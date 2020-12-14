@@ -7,17 +7,26 @@ import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import monitoreo.modelos.interfaces.IGrafico;
+import monitoreo.modelos.interfaces.ITipoServicio;
 
 public class Punto implements IGrafico {
+
+    private ITipoServicio tipoServicio;
 
     private Graphic punto;
     private static final SpatialReference SPATIAL_REFERENCE = SpatialReferences.getWgs84();
     SimpleMarkerSymbol circleSymbol;
 
-    public Punto(Double latitud, Double longitud){
+    public Punto(ITipoServicio tipoServicio, Double latitud, Double longitud){
+        this.tipoServicio = tipoServicio;
+
         circleSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, 0xFFFF0000, 10);
         punto = new Graphic(new Point(longitud, latitud, SPATIAL_REFERENCE), circleSymbol);
         //graphicsOverlay.getGraphics().add(punto);
+    }
+
+    public Graphic getGrafico(){
+        return getPunto();
     }
 
     public Graphic getPunto() {
@@ -39,6 +48,7 @@ public class Punto implements IGrafico {
 
     @Override
     public void ejecutarServicio() {
-        System.out.println("[Punto] Ejecutando punto");
+        //System.out.println("[Punto] Ejecutando punto");
+        tipoServicio.ejecutarServicio();
     }
 }
