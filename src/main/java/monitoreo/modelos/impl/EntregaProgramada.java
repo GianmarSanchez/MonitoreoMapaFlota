@@ -1,8 +1,6 @@
 package monitoreo.modelos.impl;
 
-import monitoreo.modelos.interfaces.IEntrega;
-
-public class EntregaProgramada implements IEntrega {
+public class EntregaProgramada  {
 
     private String rangoHora;
     private String fecha;
@@ -14,13 +12,11 @@ public class EntregaProgramada implements IEntrega {
         this.fecha = fecha;
     }
 
-    @Override
     public void listarEntrega() {
 
         System.out.println("[Entrega Programada] Entrega planificada: " + this.fecha + " - " + this.rangoHora );
     }
 
-    @Override
     public Double calcularCosto() {
 
         return this.costo;
