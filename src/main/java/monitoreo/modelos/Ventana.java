@@ -53,7 +53,8 @@ public class Ventana extends Application {
         guia.listarEntrega();
 
         GuiaEntrega guiaGeneral = new GuiaEntrega();
-        guiaGeneral.agregarEntrega(new EntregaProgramada("13:00-14:00", "14/12/2020"));
+        guiaGeneral.agregarEntrega(new EntregaProgramada("13:00-14:00", "15/12/2020"));
+        guiaGeneral.agregarEntrega(new EntregaProgramada("15:00-16:00", "15/12/2020"));
         guiaGeneral.agregarEntrega(guia);
 
         System.out.println("[Cliente][Guia General] Costo total "+guiaGeneral.calcularCosto());
