@@ -57,14 +57,17 @@ public class Ventana extends Application {
 
         // Entregas programadas para una misma ruta
         Double costoTotal = 0.0;
-        EntregaProgramada entrega1 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        EntregaProgramada entrega1 = new EntregaProgramada("09:00-10:00", "14/12/2020");
         costoTotal += entrega1.calcularCosto();
 
-        EntregaProgramada entrega2 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        EntregaProgramada entrega2 = new EntregaProgramada("10:00-11:00", "14/12/2020");
         costoTotal += entrega2.calcularCosto();
 
-        EntregaProgramada entrega3 = new EntregaProgramada("09:00-10:00", "23/07/2020");
+        EntregaProgramada entrega3 = new EntregaProgramada("09:00-10:00", "15/12/2020");
         costoTotal += entrega3.calcularCosto();
+
+        EntregaProgramada entrega4 = new EntregaProgramada("10:00-11:00", "15/12/2020");
+        costoTotal += entrega4.calcularCosto();
 
         System.out.println("[Cliente] Costo total "+costoTotal);
 
