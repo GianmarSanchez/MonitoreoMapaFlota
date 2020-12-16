@@ -14,13 +14,14 @@ import monitoreo.modelos.interfaces.ITipoServicio;
 
 public class Ventana extends Application {
 
-    private Mapa mapaBase;
+    //private Mapa mapaBase;
     //private GraphicsOverlay graphicsOverlay;
+    FachadaMapa facade = null;
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        FachadaMapa facade = new FachadaMapa(stage);
+        facade = new FachadaMapa(stage);
         facade.mostrarMapa();
 
         facade.getMapaBase().imprimeCoordenadasActual();
@@ -109,7 +110,7 @@ public class Ventana extends Application {
         stage.setHeight(700);
 
         //  Clonacion de MapaBase
-        Mapa mapaBase2 = (Mapa)mapaBase.copiar();
+        Mapa mapaBase2 = (Mapa)facade.getMapaBase().copiar();
 
         mapaBase2.imprimeCoordenadasActual();
         stackPane.getChildren().add(mapaBase2.getMapView());
