@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.*;
 import monitoreo.modelos.interfaces.ITipoServicio;
+import monitoreo.modelos.patterns.Context;
 
 public class Ventana extends Application {
 
@@ -43,7 +44,7 @@ public class Ventana extends Application {
         facade.getStackPane().setMargin(btnNuevo, new Insets(10, 10, 10, 10));
 
 
-
+        /*
         // Entregas programadas para una misma ruta
         // Double costoTotal = 0.0; No es necesario usar un acumulador
         GuiaEntrega guia = new GuiaEntrega();
@@ -97,16 +98,53 @@ public class Ventana extends Application {
         //facade.getStackPane().getChildren().add(mapaBase.getMapView());
         facade.stackAddMapView();
 
+        */
+
+
+        // Strategy, algoritmos de creacion de ruta
+        Double[][] puntos = {
+            {-12.054456, -77.083491},  // inicio
+            {-12.059279, -77.075558}   // fin
+        };
+        Context context = new Context();
+        context.setStrategy(new CamionRutaStrategy());
+        context.setStrategy(new MotoRutaStrategy());
+        Double[][] puntosEntregaOptimizado = context.crearRuta(puntos);
+        PoliLinea rutaLinea = new PoliLinea(puntosEntregaOptimizado);
+        facade.addGraphicsOverlay(rutaLinea.getGrafico());
+
+        // generar puntos
+        Recojo recojo = new Recojo(puntos[0][0], puntos[0][1], "UNMSM", "Recoger en la entrada");
+        Despacho entrega = new Despacho(puntos[1][0], puntos[1][1], "Terapias infantiles", "Despachar libros", "123456798");
+        Punto[] puntosRuta = { recojo, entrega };
+
+        // creacion de la ruta optimizada, incluye puntos
+        Ruta ruta = new Ruta(rutaLinea, puntosRuta);
+
+
+        // exportar la informacion visitando cada nodo
+        JSONExportVisitor jsonVisitor = new JSONExportVisitor();
+        for (Punto punto : ruta.getPuntos()) {
+            punto.accept(jsonVisitor);
+        }
+
+        // XXX: gson pretty print
+
+        //facade.getMapaBase().getMapView().getGraphicsOverlays().add(graphicsOverlay);
+        facade.addGraphicOverlay();
+        //facade.getStackPane().getChildren().add(mapaBase.getMapView());
+        facade.stackAddMapView();
+
     }
 
     public void muestraNuevaVentana() {
-        Stage stage = new Stage();
+        Stage stageN = new Stage();
         StackPane stackPane = new StackPane();
         Scene scene = new Scene(stackPane);
-        stage.setScene(scene);
-        stage.setTitle("Sistema de Monitoreo de Vehiculos");
-        stage.setWidth(800);
-        stage.setHeight(700);
+        stageN.setScene(scene);
+        stageN.setTitle("Sistema de Monitoreo de Vehiculos");
+        stageN.setWidth(800);
+        stageN.setHeight(700);
 
         //  Clonacion de MapaBase
         Mapa mapaBase2 = (Mapa)mapaBase.copiar();
@@ -114,8 +152,9 @@ public class Ventana extends Application {
         mapaBase2.imprimeCoordenadasActual();
         stackPane.getChildren().add(mapaBase2.getMapView());
 
-        stage.show();
+        stageN.show();
     }
 
 
 }
+

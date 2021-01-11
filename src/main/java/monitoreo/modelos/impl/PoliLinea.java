@@ -16,13 +16,24 @@ public class PoliLinea implements IGrafico {
 
     private static final SpatialReference SPATIAL_REFERENCE = SpatialReferences.getWgs84();
 
-    public PoliLinea(ITipoServicio tipoServicio, Double[][] puntos) {
+    private Double[][] puntos;
 
+    public PoliLinea(ITipoServicio tipoServicio, Double[][] puntos) {
         this.tipoServicio = tipoServicio;
+        generar(puntos);
+    }
+
+    public PoliLinea(Double[][] puntos) {
+        generar(puntos);
+    }
+
+    public void generar(Double[][] puntos){
+        // Guardar primitivos
+        puntos = puntos;
 
         // create a green (0xFF005000) simple line symbol
         SimpleLineSymbol outlineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, 0xffffff00, 3.0f);
-        
+
         // create a new point collection for polygon
         PointCollection points = new PointCollection(SPATIAL_REFERENCE);
 
@@ -37,7 +48,10 @@ public class PoliLinea implements IGrafico {
         // create the graphic with polyline and symbol
         System.out.println(polygon.toJson().toString());
         this.poligono = new Graphic(polygon, outlineSymbol);
+    }
 
+    public Double[][] getPuntos() {
+        return puntos;
     }
 
     public Graphic getGrafico(){
