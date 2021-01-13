@@ -5,7 +5,7 @@ import monitoreo.modelos.Recojo;
 
 import java.util.Map;
 
-public interface Visitor {
+public interface IVisitor {
 
     Map<String, String> visitRecojo(Recojo recojo);
     Map<String, String> visitDespacho(Despacho despacho);

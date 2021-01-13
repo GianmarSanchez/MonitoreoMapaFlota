@@ -2,6 +2,7 @@ package monitoreo.modelos;
 
 import monitoreo.modelos.impl.PoliLinea;
 import monitoreo.modelos.impl.Punto;
+import monitoreo.modelos.patterns.IVisitor;
 
 public class Ruta {
 
@@ -29,6 +30,12 @@ public class Ruta {
         this.puntos = puntos;
     }
 
-
+    public void exportaRuta(IVisitor visitor)  {
+    
+        // exportar la informacion visitando cada nodo
+        for (Punto punto : getPuntos()) {
+            punto.acceptExportar(visitor);
+        }
+    }
 
 }

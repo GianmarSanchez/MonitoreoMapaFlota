@@ -1,6 +1,6 @@
 package monitoreo.modelos.patterns;
 
-public class Context {
+public class Transporte {
 
     private RutaStrategy strategy;
 

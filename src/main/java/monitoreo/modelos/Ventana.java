@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import monitoreo.modelos.impl.*;
 import monitoreo.modelos.interfaces.ITipoServicio;
-import monitoreo.modelos.patterns.Context;
+import monitoreo.modelos.patterns.Transporte;
 
 public class Ventana extends Application {
 
@@ -106,10 +106,10 @@ public class Ventana extends Application {
             {-12.054456, -77.083491},  // inicio
             {-12.059279, -77.075558}   // fin
         };
-        Context context = new Context();
-        context.setStrategy(new CamionRutaStrategy());
-        context.setStrategy(new MotoRutaStrategy());
-        Double[][] puntosEntregaOptimizado = context.crearRuta(puntos);
+        Transporte transporteContext = new Transporte();
+        //transporteContext.setStrategy(new CamionRutaStrategy());
+        transporteContext.setStrategy(new MotoRutaStrategy());
+        Double[][] puntosEntregaOptimizado = transporteContext.crearRuta(puntos);
         PoliLinea rutaLinea = new PoliLinea(puntosEntregaOptimizado);
         facade.addGraphicsOverlay(rutaLinea.getGrafico());
 
@@ -121,12 +121,13 @@ public class Ventana extends Application {
         // creacion de la ruta optimizada, incluye puntos
         Ruta ruta = new Ruta(rutaLinea, puntosRuta);
 
-
         // exportar la informacion visitando cada nodo
         JSONExportVisitor jsonVisitor = new JSONExportVisitor();
-        for (Punto punto : ruta.getPuntos()) {
-            punto.accept(jsonVisitor);
-        }
+        //for (Punto punto : ruta.getPuntos()) {
+        //    punto.acceptExportar(jsonVisitor);
+        //}
+
+        ruta.exportaRuta(jsonVisitor);
 
         // XXX: gson pretty print
 

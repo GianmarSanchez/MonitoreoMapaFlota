@@ -1,7 +1,13 @@
 package monitoreo.modelos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import monitoreo.modelos.impl.Punto;
-import monitoreo.modelos.patterns.Visitor;
+import monitoreo.modelos.patterns.IVisitor;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Recojo extends Punto {
 
@@ -26,8 +32,18 @@ public class Recojo extends Punto {
         return comentarios;
     }
 
-    public void accept(Visitor visitor) {
+    public void acceptExportar(IVisitor visitor) {
         visitor.visitRecojo(this);
     }
 
+    public Map<String, String> exportarJson()   {
+        
+        Map<String, String> json = new HashMap<>();
+        json.put("comentarios", getComentarios());
+        json.put("direccion", getDireccion());
+        Gson gson = new GsonBuilder().create();
+        String jsonParse = gson.toJson(json);
+        System.out.println("[Visitor]-[Recojo] "+jsonParse);
+        return json;
+    }
 }

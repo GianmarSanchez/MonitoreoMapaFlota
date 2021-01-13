@@ -8,7 +8,7 @@ import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import monitoreo.modelos.interfaces.IGrafico;
 import monitoreo.modelos.interfaces.ITipoServicio;
-import monitoreo.modelos.patterns.Visitor;
+import monitoreo.modelos.patterns.IVisitor;
 
 public abstract class Punto implements IGrafico {
 
@@ -58,5 +58,5 @@ public abstract class Punto implements IGrafico {
         tipoServicio.ejecutarServicio();
     }
 
-    public abstract void accept(Visitor visitor);
+    public abstract void acceptExportar(IVisitor visitor);
 }
